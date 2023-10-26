@@ -5,6 +5,8 @@ import com.example.springserviceforcvswaggerdocker.repository.SpecializationRepo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SpecializationService {
 
@@ -17,5 +19,9 @@ public class SpecializationService {
 
     public Specialization store(Specialization specialization) {
         return specializationRepository.save(specialization);
+    }
+
+    public Optional<Specialization> findById(Long id) {
+        return specializationRepository.findById(id);
     }
 }

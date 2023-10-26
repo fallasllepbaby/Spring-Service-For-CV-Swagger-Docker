@@ -4,6 +4,7 @@ import com.example.springserviceforcvswaggerdocker.model.Candidate;
 import com.example.springserviceforcvswaggerdocker.repository.CandidateRepository;
 import com.example.springserviceforcvswaggerdocker.service.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,9 @@ public class CandidateController {
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity add(@RequestPart("candidate") Candidate candidate, @RequestPart("photo") MultipartFile photo) throws IOException {
-        return ResponseEntity.ok(candidateService.store(candidate, photo));
+    public ResponseEntity<Candidate> add(@RequestPart("candidate") Candidate candidate, @RequestPart("photo") MultipartFile photo) throws IOException {
+        Candidate candidateWithPhoto = candidateService.store(candidate, photo);
+        return new ResponseEntity<>(candidateWithPhoto, HttpStatus.CREATED);
     }
 
 }
