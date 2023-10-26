@@ -1,6 +1,7 @@
 package com.example.springserviceforcvswaggerdocker.model;
 
 import jakarta.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -14,9 +15,11 @@ public class Candidate {
     private String name;
     private String surname;
     private String middlename;
-    private String photo;
+    @Lob
+    private byte[] photo;
     private String description;
-    private String cvFile;
+    /*@Lob
+    private byte[] cvFile;*/
 
     @OneToMany(mappedBy = "candidate")
     private Set<CandidateTest> candidateTests;
@@ -60,11 +63,11 @@ public class Candidate {
         this.middlename = middlename;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
@@ -76,13 +79,13 @@ public class Candidate {
         this.description = description;
     }
 
-    public String getCvFile() {
+    /*public byte[] getCvFile() {
         return cvFile;
     }
 
-    public void setCvFile(String cvFile) {
+    public void setCvFile(byte[] cvFile) {
         this.cvFile = cvFile;
-    }
+    }*/
 
     public Set<CandidateTest> getCandidateTests() {
         return candidateTests;
