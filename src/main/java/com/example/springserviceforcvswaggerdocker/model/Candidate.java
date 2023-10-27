@@ -1,11 +1,17 @@
 package com.example.springserviceforcvswaggerdocker.model;
 
-import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 
+
+
+
+import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class Candidate {
@@ -15,11 +21,12 @@ public class Candidate {
     private String name;
     private String surname;
     private String middlename;
-    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] photo;
+
     private String description;
-    /*@Lob
-    private byte[] cvFile;*/
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] cvFile;
 
     @OneToMany(mappedBy = "candidate")
     private Set<CandidateTest> candidateTests;
@@ -79,13 +86,13 @@ public class Candidate {
         this.description = description;
     }
 
-    /*public byte[] getCvFile() {
+    public byte[] getCvFile() {
         return cvFile;
     }
 
     public void setCvFile(byte[] cvFile) {
         this.cvFile = cvFile;
-    }*/
+    }
 
     public Set<CandidateTest> getCandidateTests() {
         return candidateTests;

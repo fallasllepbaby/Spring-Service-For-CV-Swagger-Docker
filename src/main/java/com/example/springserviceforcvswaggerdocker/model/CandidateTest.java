@@ -1,11 +1,13 @@
 package com.example.springserviceforcvswaggerdocker.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 public class CandidateTest {
+    @javax.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -61,4 +63,5 @@ public class CandidateTest {
     public void setMark(int mark) {
         this.mark = mark;
     }
+
 }

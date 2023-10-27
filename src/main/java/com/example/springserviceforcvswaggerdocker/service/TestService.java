@@ -6,6 +6,8 @@ import com.example.springserviceforcvswaggerdocker.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TestService {
 
@@ -18,5 +20,9 @@ public class TestService {
 
     public Test store(Test test) {
         return testRepository.save(test);
+    }
+
+    public Optional<Test> findById(Long id) {
+        return testRepository.findById(id);
     }
 }
