@@ -30,24 +30,11 @@ public class CandidateController {
         return new ResponseEntity<>(candidateWithFiles, HttpStatus.CREATED);
     }
 
-    /*@PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Candidate> update(@RequestPart("candidate") Candidate candidate,
                                             @RequestPart("photo") MultipartFile photo,
                                             @RequestPart("cvFile") MultipartFile cvFile,
-                                            @PathVariable Long id) throws IOException {
-        Optional<Candidate> currentCandidate = candidateService.findById(id);
-        if(!currentCandidate.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Candidate candidateWithFiles = candidateService.store(candidate, photo, cvFile);
-        return new ResponseEntity<>(candidateWithFiles, HttpStatus.NO_CONTENT);
-    }*/
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Candidate> update(@RequestPart("candidate") Candidate candidate,
-                                 @RequestPart("photo") MultipartFile photo,
-                                 @RequestPart("cvFile") MultipartFile cvFile,
-                                 @PathVariable Long id) {
+                                            @PathVariable Long id) {
 
         return candidateService.findById(id).map(updatedCandidate -> {
             updatedCandidate.setName(candidate.getName());
@@ -60,7 +47,6 @@ public class CandidateController {
             Candidate candidateWithFiles = candidateService.store(candidate, photo, cvFile);
             return new ResponseEntity<>(candidateWithFiles, HttpStatus.CREATED);
         });
-
     }
 
 }

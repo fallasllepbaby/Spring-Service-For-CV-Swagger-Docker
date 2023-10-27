@@ -29,12 +29,16 @@ public class SpecializationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Specialization> update(@RequestBody Specialization specialization, @PathVariable Long id) {
-        Optional<Specialization> currentSpecialization = specializationService.findById(id);
-        if(!currentSpecialization.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        specializationService.store(specialization);
-        return new ResponseEntity<>(specialization, HttpStatus.NO_CONTENT);
+    public ResponseEntity<Specialization> update(@RequestBody Specialization specialization,
+                                            @PathVariable Long id) {
+
+        return specializationService.findById(id).map(updatedSpecialization -> {
+            updatedSpecialization.setName(specialization.getName());
+            updatedSpecialization.setDescription(specialization.getDescription());
+            specializationService.store(updatedSpecialization);
+            return new ResponseEntity<>(updatedSpecialization, HttpStatus.OK);
+        }).orElseGet(() -> {
+            return new ResponseEntity<>(specialization, HttpStatus.CREATED);
+        });
     }
 }

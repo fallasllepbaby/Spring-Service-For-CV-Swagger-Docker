@@ -5,6 +5,8 @@ import com.example.springserviceforcvswaggerdocker.repository.CandidateTestRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CandidateTestService {
 
@@ -16,6 +18,15 @@ public class CandidateTestService {
     }
 
     public CandidateTest store(CandidateTest candidateTest) {
-        return candidateTestRepository.save(candidateTest);
+        CandidateTest updatedCandidateTest = new CandidateTest();
+        updatedCandidateTest.setCandidate(candidateTest.getCandidate());
+        updatedCandidateTest.setTest(candidateTest.getTest());
+        updatedCandidateTest.setLocalDate(candidateTest.getLocalDate());
+        updatedCandidateTest.setMark(candidateTest.getMark());
+        return candidateTestRepository.save(updatedCandidateTest);
+    }
+
+    public Optional<CandidateTest> findById(Long id) {
+        return candidateTestRepository.findById(id);
     }
 }
