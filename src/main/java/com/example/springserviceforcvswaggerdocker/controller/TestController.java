@@ -4,6 +4,8 @@ import com.example.springserviceforcvswaggerdocker.model.Specialization;
 import com.example.springserviceforcvswaggerdocker.model.Test;
 import com.example.springserviceforcvswaggerdocker.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,21 @@ public class TestController {
     @Autowired
     public TestController(TestService testService) {
         this.testService = testService;
+    }
+
+    @GetMapping
+    public Page<Test> getAll(@RequestParam(value = "name", required = false) String name,
+                                       Pageable pageable) {
+
+        Page<Test> tests;
+
+        if (name != null) {
+            tests = testService.findByNameContaining(name, pageable);
+        } else {
+            tests = testService.findAll(pageable);
+        }
+
+        return tests;
     }
 
     @PostMapping

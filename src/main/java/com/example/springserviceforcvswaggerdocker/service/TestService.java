@@ -4,6 +4,8 @@ import com.example.springserviceforcvswaggerdocker.model.Specialization;
 import com.example.springserviceforcvswaggerdocker.model.Test;
 import com.example.springserviceforcvswaggerdocker.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,5 +26,13 @@ public class TestService {
 
     public Optional<Test> findById(Long id) {
         return testRepository.findById(id);
+    }
+
+    public Page<Test> findAll(Pageable pageable) {
+        return testRepository.findAll(pageable);
+    }
+
+    public Page<Test> findByNameContaining(String name, Pageable pageable) {
+        return testRepository.findByNameContaining(name, pageable);
     }
 }
