@@ -7,17 +7,15 @@ import java.time.LocalDate;
 
 @Entity
 public class CandidateTest {
+
     @javax.persistence.Id
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
     @ManyToOne
-    @JoinColumn(name = "test_id")
     private Test test;
 
     private LocalDate localDate;
@@ -63,5 +61,4 @@ public class CandidateTest {
     public void setMark(int mark) {
         this.mark = mark;
     }
-
 }

@@ -12,12 +12,6 @@ public class Specialization {
     private String name;
     private String description;
 
-    @ManyToMany(mappedBy = "specializations")
-    private Set<Candidate> candidates;
-
-    @ManyToMany(mappedBy = "specializations")
-    private Set<Test> tests;
-
     public Long getId() {
         return id;
     }
@@ -42,19 +36,4 @@ public class Specialization {
         this.description = description;
     }
 
-    public Set<Candidate> getCandidates() {
-        return candidates;
-    }
-
-    public void setCandidates(Set<Candidate> candidates) {
-        this.candidates = candidates;
-    }
-
-    public Set<Test> getTests() {
-        return tests;
-    }
-
-    public void setTests(Set<Test> tests) {
-        this.tests = tests;
-    }
 }

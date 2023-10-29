@@ -14,13 +14,6 @@ public class Test {
     private String description;
 
     @OneToMany(mappedBy = "test")
-    private Set<CandidateTest> candidateTestSet;
-
-    @ManyToMany
-    @JoinTable(
-            name = "test_specialization",
-            joinColumns = @JoinColumn(name = "test_id"),
-            inverseJoinColumns = @JoinColumn(name = "specialization_id"))
     private Set<Specialization> specializations;
 
     public Long getId() {
@@ -45,14 +38,6 @@ public class Test {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<CandidateTest> getCandidateTestSet() {
-        return candidateTestSet;
-    }
-
-    public void setCandidateTestSet(Set<CandidateTest> candidateTestSet) {
-        this.candidateTestSet = candidateTestSet;
     }
 
     public Set<Specialization> getSpecializations() {

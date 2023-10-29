@@ -29,13 +29,6 @@ public class Candidate {
     private byte[] cvFile;
 
     @OneToMany(mappedBy = "candidate")
-    private Set<CandidateTest> candidateTests;
-
-    @ManyToMany
-    @JoinTable(
-            name = "candidate_specialization",
-            joinColumns = @JoinColumn(name = "candidate_id"),
-            inverseJoinColumns = @JoinColumn(name = "specialization_id"))
     private Set<Specialization> specializations;
 
     public Long getId() {
@@ -92,14 +85,6 @@ public class Candidate {
 
     public void setCvFile(byte[] cvFile) {
         this.cvFile = cvFile;
-    }
-
-    public Set<CandidateTest> getCandidateTests() {
-        return candidateTests;
-    }
-
-    public void setCandidateTests(Set<CandidateTest> candidateTests) {
-        this.candidateTests = candidateTests;
     }
 
     public Set<Specialization> getSpecializations() {
