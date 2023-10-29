@@ -1,5 +1,6 @@
 package com.example.springserviceforcvswaggerdocker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Candidate {
     private byte[] cvFile;
 
     @OneToMany(mappedBy = "candidate")
+    @JsonIgnore
     private Set<CandidateTest> candidateTests;
 
     @ManyToMany

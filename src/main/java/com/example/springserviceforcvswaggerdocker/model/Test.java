@@ -1,5 +1,7 @@
 package com.example.springserviceforcvswaggerdocker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.util.List;
@@ -14,7 +16,8 @@ public class Test {
     private String description;
 
     @OneToMany(mappedBy = "test")
-    private Set<CandidateTest> candidateTestSet;
+    @JsonIgnore
+    private Set<CandidateTest> candidateTests;
 
     @ManyToMany
     @JoinTable(
@@ -47,12 +50,12 @@ public class Test {
         this.description = description;
     }
 
-    public Set<CandidateTest> getCandidateTestSet() {
-        return candidateTestSet;
+    public Set<CandidateTest> getCandidateTests() {
+        return candidateTests;
     }
 
-    public void setCandidateTestSet(Set<CandidateTest> candidateTestSet) {
-        this.candidateTestSet = candidateTestSet;
+    public void setCandidateTests(Set<CandidateTest> candidateTests) {
+        this.candidateTests = candidateTests;
     }
 
     public Set<Specialization> getSpecializations() {

@@ -2,16 +2,15 @@ package com.example.springserviceforcvswaggerdocker.controller;
 
 import com.example.springserviceforcvswaggerdocker.model.Candidate;
 import com.example.springserviceforcvswaggerdocker.model.CandidateTest;
-import com.example.springserviceforcvswaggerdocker.model.Test;
 import com.example.springserviceforcvswaggerdocker.service.CandidateTestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/v1/candidatetests")
@@ -22,6 +21,27 @@ public class CandidateTestController {
     @Autowired
     public CandidateTestController(CandidateTestService candidateTestService) {
         this.candidateTestService = candidateTestService;
+    }
+
+    @GetMapping
+    public Page<CandidateTest> getCandidateTests(
+            @RequestParam(value = "mark", required = false) Integer mark,
+            @RequestParam(value = "sort", defaultValue = "id") String sort,
+            Pageable pageable) {
+
+        Sort.Order order = new Sort.Order(Sort.Direction.ASC, sort);
+        Sort sortDirection = Sort.by(order);
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sortDirection);
+
+        Page<CandidateTest> candidateTests;
+
+        if (mark != null) {
+            candidateTests = candidateTestService.findByMark(mark, pageable);
+        } else {
+            candidateTests = candidateTestService.findAll(pageable);
+        }
+
+        return candidateTests;
     }
 
     @PostMapping
