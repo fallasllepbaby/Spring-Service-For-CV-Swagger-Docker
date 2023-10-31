@@ -3,6 +3,8 @@ package com.example.springserviceforcvswaggerdocker.controller;
 import com.example.springserviceforcvswaggerdocker.model.Candidate;
 import com.example.springserviceforcvswaggerdocker.model.Specialization;
 import com.example.springserviceforcvswaggerdocker.service.SpecializationService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/specializations")
 public class SpecializationController {
+    private static final Logger LOGGER = LogManager.getLogger(SpecializationController.class);
 
     private final SpecializationService specializationService;
 
@@ -30,6 +33,7 @@ public class SpecializationController {
     public Page<Specialization> getAll(@RequestParam(value = "name", required = false) String name,
                                        Pageable pageable) {
 
+        LOGGER.info("Getting all specializations.");
         Page<Specialization> specializations;
 
         if (name != null) {
@@ -43,6 +47,7 @@ public class SpecializationController {
 
     @PostMapping
     public ResponseEntity<Specialization> add(@RequestBody Specialization specialization) {
+        LOGGER.info("Adding new specialization: " + specialization.getName());
         specializationService.store(specialization);
         return new ResponseEntity<>(specialization, HttpStatus.CREATED);
     }
@@ -50,6 +55,7 @@ public class SpecializationController {
     @PutMapping("/{id}")
     public ResponseEntity<Specialization> update(@RequestBody Specialization specialization,
                                             @PathVariable Long id) {
+        LOGGER.info("Updating specialization with id: " + id);
 
         return specializationService.findById(id).map(updatedSpecialization -> {
             updatedSpecialization.setName(specialization.getName());

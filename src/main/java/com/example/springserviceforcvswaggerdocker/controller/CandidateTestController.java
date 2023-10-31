@@ -3,6 +3,8 @@ package com.example.springserviceforcvswaggerdocker.controller;
 import com.example.springserviceforcvswaggerdocker.model.Candidate;
 import com.example.springserviceforcvswaggerdocker.model.CandidateTest;
 import com.example.springserviceforcvswaggerdocker.service.CandidateTestService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/candidatetests")
 public class CandidateTestController {
 
+    private static final Logger LOGGER = LogManager.getLogger(CandidateTestController.class);
     private final CandidateTestService candidateTestService;
 
     @Autowired
@@ -28,6 +31,8 @@ public class CandidateTestController {
             @RequestParam(value = "mark", required = false) Integer mark,
             @RequestParam(value = "sort", defaultValue = "id") String sort,
             Pageable pageable) {
+
+        LOGGER.info("Getting all candidate tests.");
 
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, sort);
         Sort sortDirection = Sort.by(order);
@@ -46,6 +51,7 @@ public class CandidateTestController {
 
     @PostMapping
     public ResponseEntity<CandidateTest> add(@RequestBody CandidateTest candidateTest) {
+        LOGGER.info("Adding new candidate test.");
         CandidateTest updatedCandidateTest = candidateTestService.store(candidateTest);
         return new ResponseEntity<>(updatedCandidateTest, HttpStatus.CREATED);
     }
@@ -53,6 +59,7 @@ public class CandidateTestController {
     @PutMapping("/{id}")
     public ResponseEntity<CandidateTest> update(@RequestBody CandidateTest candidateTest,
                                             @PathVariable Long id) {
+        LOGGER.info("Updating candidate test with id: " + id);
 
         return candidateTestService.findById(id).map(updatedCandidateTest -> {
             updatedCandidateTest.setCandidate(candidateTest.getCandidate());

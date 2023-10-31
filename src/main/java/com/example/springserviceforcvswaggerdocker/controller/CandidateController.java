@@ -15,12 +15,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/candidates")
 public class CandidateController {
-    private static final Logger logger = LogManager.getLogger(CandidateController.class);
+    private static final Logger LOGGER = LogManager.getLogger(CandidateController.class);
 
     private final CandidateService candidateService;
 
@@ -34,7 +33,7 @@ public class CandidateController {
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "sort", defaultValue = "id") String sort,
             Pageable pageable) {
-        logger.info("Getting all candidates.");
+        LOGGER.info("Getting all candidates.");
 
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, sort);
         Sort sortDirection = Sort.by(order);
@@ -55,7 +54,7 @@ public class CandidateController {
     public ResponseEntity<Candidate> add(@RequestPart("candidate") Candidate candidate,
                                          @RequestPart("photo") MultipartFile photo,
                                          @RequestPart("cvFile") MultipartFile cvFile) throws IOException {
-        logger.info("Adding a new candidate: " + candidate.getName());
+        LOGGER.info("Adding a new candidate: " + candidate.getName());
         Candidate candidateWithFiles = candidateService.store(candidate, photo, cvFile);
         return new ResponseEntity<>(candidateWithFiles, HttpStatus.CREATED);
     }
@@ -65,6 +64,7 @@ public class CandidateController {
                                             @RequestPart("photo") MultipartFile photo,
                                             @RequestPart("cvFile") MultipartFile cvFile,
                                             @PathVariable Long id) {
+        LOGGER.info("Updating candidate with id: " + id);
 
         return candidateService.findById(id).map(updatedCandidate -> {
             updatedCandidate.setName(candidate.getName());

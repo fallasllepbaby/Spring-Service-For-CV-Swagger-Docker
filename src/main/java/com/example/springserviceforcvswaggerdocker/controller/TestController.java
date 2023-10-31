@@ -3,6 +3,8 @@ package com.example.springserviceforcvswaggerdocker.controller;
 import com.example.springserviceforcvswaggerdocker.model.Specialization;
 import com.example.springserviceforcvswaggerdocker.model.Test;
 import com.example.springserviceforcvswaggerdocker.service.TestService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,7 @@ import java.util.Optional;
 @RequestMapping("/v1/tests")
 public class TestController {
 
+    private static final Logger LOGGER = LogManager.getLogger(TestController.class);
     private final TestService testService;
 
     @Autowired
@@ -26,6 +29,7 @@ public class TestController {
     @GetMapping
     public Page<Test> getAll(@RequestParam(value = "name", required = false) String name,
                                        Pageable pageable) {
+        LOGGER.info("Getting all tests.");
 
         Page<Test> tests;
 
@@ -40,6 +44,7 @@ public class TestController {
 
     @PostMapping
     public ResponseEntity<Test> add(@RequestBody Test test) {
+        LOGGER.info("Adding new test: " + test.getName());
         testService.store(test);
         return new ResponseEntity<>(test, HttpStatus.CREATED);
     }
@@ -47,6 +52,7 @@ public class TestController {
     @PutMapping("/{id}")
     public ResponseEntity<Test> update(@RequestBody Test test,
                                                  @PathVariable Long id) {
+        LOGGER.info("Updating test with id: " + id);
 
         return testService.findById(id).map(updatedTest -> {
             updatedTest.setName(test.getName());
