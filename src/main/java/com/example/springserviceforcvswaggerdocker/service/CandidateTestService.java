@@ -21,12 +21,7 @@ public class CandidateTestService {
     }
 
     public CandidateTest store(CandidateTest candidateTest) {
-        CandidateTest updatedCandidateTest = new CandidateTest();
-        updatedCandidateTest.setCandidate(candidateTest.getCandidate());
-        updatedCandidateTest.setTest(candidateTest.getTest());
-        updatedCandidateTest.setLocalDate(candidateTest.getLocalDate());
-        updatedCandidateTest.setMark(candidateTest.getMark());
-        return candidateTestRepository.save(updatedCandidateTest);
+        return candidateTestRepository.save(candidateTest);
     }
 
     public Optional<CandidateTest> findById(Long id) {
