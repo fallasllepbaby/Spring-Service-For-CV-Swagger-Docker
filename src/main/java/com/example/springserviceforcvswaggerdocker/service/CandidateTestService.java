@@ -1,6 +1,6 @@
 package com.example.springserviceforcvswaggerdocker.service;
 
-import com.example.springserviceforcvswaggerdocker.model.CandidateTest;
+import com.example.springserviceforcvswaggerdocker.entity.CandidateTest;
 import com.example.springserviceforcvswaggerdocker.repository.CandidateTestRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,6 +1,6 @@
 package com.example.springserviceforcvswaggerdocker.controller;
 
-import com.example.springserviceforcvswaggerdocker.model.Candidate;
+import com.example.springserviceforcvswaggerdocker.entity.Candidate;
 import com.example.springserviceforcvswaggerdocker.service.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

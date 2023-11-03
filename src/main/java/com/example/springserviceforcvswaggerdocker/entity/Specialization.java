@@ -1,4 +1,4 @@
-package com.example.springserviceforcvswaggerdocker.model;
+package com.example.springserviceforcvswaggerdocker.entity;
 
 import javax.persistence.*;
 

@@ -1,7 +1,6 @@
 package com.example.springserviceforcvswaggerdocker.controller;
 
-import com.example.springserviceforcvswaggerdocker.model.Specialization;
-import com.example.springserviceforcvswaggerdocker.model.Test;
+import com.example.springserviceforcvswaggerdocker.entity.Test;
 import com.example.springserviceforcvswaggerdocker.service.TestService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/tests")

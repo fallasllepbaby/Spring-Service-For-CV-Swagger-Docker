@@ -1,4 +1,4 @@
-package com.example.springserviceforcvswaggerdocker.model;
+package com.example.springserviceforcvswaggerdocker.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
@@ -6,13 +6,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 
 
-
-
-
-import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 public class Candidate {

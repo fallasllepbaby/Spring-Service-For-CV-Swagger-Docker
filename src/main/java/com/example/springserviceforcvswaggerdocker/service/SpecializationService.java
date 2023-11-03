@@ -1,6 +1,6 @@
 package com.example.springserviceforcvswaggerdocker.service;
 
-import com.example.springserviceforcvswaggerdocker.model.Specialization;
+import com.example.springserviceforcvswaggerdocker.entity.Specialization;
 import com.example.springserviceforcvswaggerdocker.repository.SpecializationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

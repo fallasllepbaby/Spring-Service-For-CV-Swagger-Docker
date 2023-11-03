@@ -1,21 +1,15 @@
 package com.example.springserviceforcvswaggerdocker.controller;
 
-import com.example.springserviceforcvswaggerdocker.model.Candidate;
-import com.example.springserviceforcvswaggerdocker.model.Specialization;
+import com.example.springserviceforcvswaggerdocker.entity.Specialization;
 import com.example.springserviceforcvswaggerdocker.service.SpecializationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/specializations")

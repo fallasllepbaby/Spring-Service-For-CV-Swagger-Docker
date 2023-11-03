@@ -1,18 +1,34 @@
-version: '3.1'
+version: "3.2"
 services:
-  app:
-    container_name: springboot-postgresql
-    image: springboot-postgresql
-    build: ./
+  my-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
     ports:
       - "8080:8080"
-    depends_on:
-      - postgresqldb
-  postgresqldb:
-    image: postgres
-    ports:
-      - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=cv-service
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cv-service
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: cv-service
+      POSTGRES_PASSWORD: root
+    volumes:
+      - "pg-data:/var/lib/postgresql/data"
+#    networks:
+#      - local
+
+volumes:
+  pg-data: {}
+
+#networks:
+#  local:
+#    driver: bridge
