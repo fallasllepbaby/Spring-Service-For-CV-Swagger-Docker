@@ -42,8 +42,6 @@
 
 ## Автор
 
-![Изображение автора](https://avatars.githubusercontent.com/u/99354046?v=4)
-
 [Laparevich Daniil](https://github.com/fallasllepbaby)
 
 
