@@ -57,7 +57,8 @@ public class TestController {
             testService.store(updatedTest);
             return new ResponseEntity<>(updatedTest, HttpStatus.OK);
         }).orElseGet(() -> {
-            return new ResponseEntity<>(test, HttpStatus.CREATED);
+            Test newTest = testService.store(test);
+            return new ResponseEntity<>(newTest, HttpStatus.CREATED);
         });
     }
 }

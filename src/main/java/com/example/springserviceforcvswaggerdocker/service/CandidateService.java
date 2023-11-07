@@ -1,6 +1,7 @@
 package com.example.springserviceforcvswaggerdocker.service;
 
 import com.example.springserviceforcvswaggerdocker.entity.Candidate;
+import com.example.springserviceforcvswaggerdocker.exception.AlreadyExistException;
 import com.example.springserviceforcvswaggerdocker.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,14 +27,21 @@ public class CandidateService {
     }
 
     public Candidate store(Candidate candidate, MultipartFile photo, MultipartFile cvFile) {
+        LOGGER.info("Storing new candidate data : " + candidate.getName());
+
+        if (candidateRepository.existsByName(candidate.getName()) && candidateRepository.existsBySurname(candidate.getSurname())) {
+            LOGGER.error("Candidate with name " + candidate.getName() + " and surname " + candidate.getSurname() + " already exists");
+            throw new AlreadyExistException("Candidate with name " + candidate.getName() + " and surname " + candidate.getSurname() + " already exists");
+        }
+
         try {
-            LOGGER.info("Storing candidate data for: " + candidate.getName());
             candidate.setPhoto(photo.getBytes());
             candidate.setCvFile(cvFile.getBytes());
         } catch (IOException e) {
             LOGGER.error("Error while storing candidate data for: " + candidate.getName(), e);
             throw new RuntimeException(e);
         }
+
         return candidateRepository.save(candidate);
     }
 

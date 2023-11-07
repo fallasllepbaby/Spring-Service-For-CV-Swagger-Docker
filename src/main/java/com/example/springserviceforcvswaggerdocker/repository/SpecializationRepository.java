@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SpecializationRepository extends JpaRepository<Specialization, Long> {
     Page<Specialization> findByNameContaining(String name, Pageable pageable);
+
+    boolean existsByName(String name);
 }

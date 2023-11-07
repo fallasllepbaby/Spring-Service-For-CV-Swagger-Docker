@@ -1,6 +1,7 @@
 package com.example.springserviceforcvswaggerdocker.service;
 
 import com.example.springserviceforcvswaggerdocker.entity.Specialization;
+import com.example.springserviceforcvswaggerdocker.exception.AlreadyExistException;
 import com.example.springserviceforcvswaggerdocker.repository.SpecializationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,10 @@ public class SpecializationService {
 
     public Specialization store(Specialization specialization) {
         LOGGER.info("Storing specialization data for: " + specialization.getName());
+        if (specializationRepository.existsByName(specialization.getName())) {
+            LOGGER.error("Specialization with name " + specialization.getName() + " already exists");
+            throw new AlreadyExistException("Specialization with name " + specialization.getName() + " already exists");
+        }
         return specializationRepository.save(specialization);
     }
 

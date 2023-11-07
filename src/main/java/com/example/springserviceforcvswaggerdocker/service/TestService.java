@@ -1,6 +1,7 @@
 package com.example.springserviceforcvswaggerdocker.service;
 
 import com.example.springserviceforcvswaggerdocker.entity.Test;
+import com.example.springserviceforcvswaggerdocker.exception.AlreadyExistException;
 import com.example.springserviceforcvswaggerdocker.repository.TestRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +26,10 @@ public class TestService {
 
     public Test store(Test test) {
         LOGGER.info("Storing test data for: " + test.getName());
+        if (testRepository.existsByName(test.getName())) {
+            LOGGER.error("Test with name " + test.getName() + " already exists");
+            throw new AlreadyExistException("Test with name " + test.getName() + " already exists");
+        }
         return testRepository.save(test);
     }
 

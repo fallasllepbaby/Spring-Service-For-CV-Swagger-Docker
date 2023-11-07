@@ -7,4 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     Page<Candidate> findByNameContaining(String name, Pageable pageable);
+
+    boolean existsByName(String name);
+
+    boolean existsBySurname(String surname);
 }
