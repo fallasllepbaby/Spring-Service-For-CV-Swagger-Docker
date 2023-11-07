@@ -1,7 +1,15 @@
 package com.example.springserviceforcvswaggerdocker.controller;
 
 import com.example.springserviceforcvswaggerdocker.entity.CandidateTest;
+import com.example.springserviceforcvswaggerdocker.entity.Specialization;
 import com.example.springserviceforcvswaggerdocker.service.CandidateTestService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +33,15 @@ public class CandidateTestController {
         this.candidateTestService = candidateTestService;
     }
 
-    @GetMapping
+    @Operation(summary = "Get all Candidate Tests paged", description = "Get all Candidate Tests paged", tags = { "candidate test" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = CandidateTest.class))))
+    })
+    @GetMapping(produces = "application/json")
     public Page<CandidateTest> getCandidateTests(
-            @RequestParam(value = "mark", required = false) Integer mark,
-            @RequestParam(value = "sort", defaultValue = "id") String sort,
-            Pageable pageable) {
+            @Parameter(description = "Filter by mark") @RequestParam(value = "mark", required = false) Integer mark,
+            @Parameter(description = "Sort by field") @RequestParam(value = "sort", defaultValue = "id") String sort,
+            @Parameter(description = "Parameters for pagination") @RequestParam(required = false) Pageable pageable) {
 
         LOGGER.info("Getting all candidate tests.");
 
@@ -48,16 +60,25 @@ public class CandidateTestController {
         return candidateTests;
     }
 
-    @PostMapping
-    public ResponseEntity<CandidateTest> add(@RequestBody CandidateTest candidateTest) {
+    @Operation(summary = "Add a new candidate test", description = "Add a new candidate test", tags = { "candidate test" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created successfully")
+    })
+    @PostMapping(produces = { "application/json" }, consumes = {"application/json" })
+    public ResponseEntity<CandidateTest> add(@Parameter(description = "Create a new candidate test", required = true) @RequestBody CandidateTest candidateTest) {
         LOGGER.info("Adding new candidate test.");
         CandidateTest updatedCandidateTest = candidateTestService.store(candidateTest);
         return new ResponseEntity<>(updatedCandidateTest, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CandidateTest> update(@RequestBody CandidateTest candidateTest,
-                                            @PathVariable Long id) {
+    @Operation(summary = "Update a candidate test", description = "Update a candidate test", tags = { "candidate test" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Updated successfully"),
+            @ApiResponse(responseCode = "201", description = "Created successfully")
+    })
+    @PutMapping(value = "/{id}", produces = { "application/json" }, consumes = {"application/json" })
+    public ResponseEntity<CandidateTest> update(@Parameter(description = "Create a new test", required = true) @RequestBody CandidateTest candidateTest,
+                                                @Parameter(description = "Test id for updating", required = true) @PathVariable Long id) {
         LOGGER.info("Updating candidate test with id: " + id);
 
         return candidateTestService.findById(id).map(updatedCandidateTest -> {
